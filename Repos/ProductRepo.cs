@@ -11,36 +11,36 @@ namespace WebApplicationExample.Repos
         {
             _dataContext = dataContext;
         }
-        public async Task<Product> GetProduct(int id)
+        public async Task<Product> GetProduct(int productId)
         {
-            var product = await _dataContext.Product.FindAsync(id);
+            var product = await _dataContext.Product.FindAsync(productId);
             return product != null ? product : new Product();
         }
 
-        public async Task<bool> AddProduct(Product productToAdd)
+        public async Task<bool> AddProduct(Product productModel)
         {
-            _dataContext.Add(productToAdd);
+            _dataContext.Add(productModel);
             return await _dataContext.SaveChangesAsync() > 0;
         }
-        public async Task<bool> UpdateProduct(Product productToUpdate)
+        public async Task<bool> UpdateProduct(Product productModel)
         {
-            var product = await _dataContext.Product.FindAsync(productToUpdate.ProductId);
+            var product = await _dataContext.Product.FindAsync(productModel.ProductId);
 
             if (product == null)
             {
                 return false;
             }
 
-            product.Name = productToUpdate.Name;
-            product.Description = productToUpdate.Description;
-            product.Price = productToUpdate.Price;
+            product.Name = productModel.Name;
+            product.Description = productModel.Description;
+            product.Price = productModel.Price;
             await _dataContext.SaveChangesAsync();
             return true;
         }
 
-        public async Task<bool> DeleteProduct(int id)
+        public async Task<bool> DeleteProduct(int ProductId)
         {
-            var product = await _dataContext.Product.FindAsync(id);
+            var product = await _dataContext.Product.FindAsync(ProductId);
 
             if (product == null)
             {

@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using WebApplicationExample.DTO;
 using WebApplicationExample.Interfaces;
 using WebApplicationExample.Models;
 
@@ -17,28 +18,28 @@ namespace WebApplicationExample.Controllers
             _repo = repo;
         }
 
-        [HttpGet("{id}")]
-        public async Task<ActionResult> GetTransaction(int id)
+        [HttpGet("{transactionId}")]
+        public async Task<ActionResult> GetTransaction(int transactionId)
         {
-            return Ok(await _repo.GetTransaction(id));
+            return Ok(await _repo.GetTransaction(transactionId));
         }
 
         [HttpPost]
-        public async Task<ActionResult> AddTransaction(Transaction transactionToAdd)
+        public async Task<ActionResult> AddTransaction(TransactionDTO transactionDTO)
         {
-            return Ok(await _repo.AddTransaction(transactionToAdd));
+            return Ok(await _repo.AddTransaction(transactionDTO));
         }
 
         [HttpPut]
-        public async Task<ActionResult> UpdateTransaction(Transaction transactionToUpdate)
+        public async Task<ActionResult> UpdateTransaction(TransactionDTO transactionDTO)
         {
-            return Ok(await _repo.UpdateTransaction(transactionToUpdate));
+            return Ok(await _repo.UpdateTransaction(transactionDTO));
         }
 
-        [HttpDelete("{id}")]
-        public async Task<ActionResult> DeleteTransaction(int id)
+        [HttpDelete("{transactionId}")]
+        public async Task<ActionResult> DeleteTransaction(int transactionId)
         {
-            return Ok(await _repo.DeleteTransaction(id));
+            return Ok(await _repo.DeleteTransaction(transactionId));
         }
     }
 }

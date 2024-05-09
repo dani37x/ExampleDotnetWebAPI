@@ -16,28 +16,28 @@ namespace WebApplicationExample.Controllers
             _repo = repo;
         }
 
-        [HttpGet("{id}")]
-        public async Task<ActionResult> GetCustomer(int id)
+        [HttpGet("{customerId}")]
+        public async Task<ActionResult> GetCustomer(int customerId)
         {
-            return Ok(await _repo.GetCustomer(id));
+            return Ok(await _repo.GetCustomer(customerId));
         }
 
         [HttpPost]
-        public async Task<ActionResult> AddCustomer(Customer CustomerToAdd)
+        public async Task<ActionResult> AddCustomer(Customer customerModel)
         {
-            return Ok(await _repo.AddCustomer(CustomerToAdd));
+            return Ok(await _repo.AddCustomer(customerModel));
         }
 
         [HttpPut]
-        public async Task<ActionResult> UpdateCustomer(Customer CustomerToUpdate)
+        public async Task<ActionResult> UpdateCustomer(Customer customerModel)
         {
-            return Ok(await _repo.UpdateCustomer(CustomerToUpdate));
+            return Ok(await _repo.UpdateCustomer(customerModel));
         }
 
-        [HttpDelete("{id}")]
-        public async Task<ActionResult> DeleteCustomer(int id)
+        [HttpDelete("{customerId}")]
+        public async Task<ActionResult> DeleteCustomer(int customerId)
         {
-            return Ok(await _repo.DeleteCustomer(id));
+            return Ok(await _repo.DeleteCustomer(customerId));
         }
     }
 }

@@ -16,28 +16,28 @@ namespace WebApplicationExample.Controllers
             _repo = repo;
         }
 
-        [HttpGet("{id}")]
-        public async Task<ActionResult> GetProduct(int id)
+        [HttpGet("{productId}")]
+        public async Task<ActionResult> GetProduct(int productId)
         {
-            return Ok(await _repo.GetProduct(id));
+            return Ok(await _repo.GetProduct(productId));
         }
 
         [HttpPost]
-        public async Task<ActionResult> AddProduct(Product productToAdd)
+        public async Task<ActionResult> AddProduct(Product productModel)
         {
-            return Ok(await _repo.AddProduct(productToAdd));
+            return Ok(await _repo.AddProduct(productModel));
         }
 
         [HttpPut]
-        public async Task<ActionResult> UpdateProduct(Product productToUpdate)
+        public async Task<ActionResult> UpdateProduct(Product productModel)
         {
-            return Ok(await _repo.UpdateProduct(productToUpdate));
+            return Ok(await _repo.UpdateProduct(productModel));
         }
 
-        [HttpDelete("{id}")]
-        public async Task<ActionResult> DeleteProduct(int id)
+        [HttpDelete("{productId}")]
+        public async Task<ActionResult> DeleteProduct(int productId)
         {
-            return Ok(await _repo.DeleteProduct(id));
+            return Ok(await _repo.DeleteProduct(productId));
         }
     }
 }

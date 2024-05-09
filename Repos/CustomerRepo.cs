@@ -12,37 +12,37 @@ namespace WebApplicationExample.Repos
             _dataContext = dataContext;
         }
 
-        public async Task<Customer> GetCustomer(int id)
+        public async Task<Customer> GetCustomer(int customerId)
         {
-            var customer = await _dataContext.Customer.FindAsync(id);
+            var customer = await _dataContext.Customer.FindAsync(customerId);
             return customer != null ? customer : new Customer();
         }
 
-        public async Task<bool> AddCustomer(Customer CustomerToAdd)
+        public async Task<bool> AddCustomer(Customer customerModel)
         {
-            _dataContext.Add(CustomerToAdd);
+            _dataContext.Add(customerModel);
             return await _dataContext.SaveChangesAsync() > 0;
         }
-        public async Task<bool> UpdateCustomer(Customer customerToUpdate)
+        public async Task<bool> UpdateCustomer(Customer customerModel)
         {
-            var customer = await _dataContext.Customer.FindAsync(customerToUpdate.CustomerId);
+            var customer = await _dataContext.Customer.FindAsync(customerModel.CustomerId);
 
             if (customer == null)
             {
                 return false;
             }
 
-            customer.Name = customerToUpdate.Name;
-            customer.Email = customerToUpdate.Email;
-            customer.PhoneNumber = customerToUpdate.PhoneNumber;
-            customer.Address = customerToUpdate.Address;
+            customer.Name = customerModel.Name;
+            customer.Email = customerModel.Email;
+            customer.PhoneNumber = customerModel.PhoneNumber;
+            customer.Address = customerModel.Address;
             await _dataContext.SaveChangesAsync();
             return true;
         }
 
-        public async Task<bool> DeleteCustomer(int id)
+        public async Task<bool> DeleteCustomer(int customerId)
         {
-            var customer = await _dataContext.Customer.FindAsync(id);
+            var customer = await _dataContext.Customer.FindAsync(customerId);
 
             if (customer == null)
             {

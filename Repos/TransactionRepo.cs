@@ -1,6 +1,7 @@
 ﻿using Azure.Core;
 using Microsoft.Extensions.Hosting;
 using WebApplicationExample.Data;
+using WebApplicationExample.DTO;
 using WebApplicationExample.Interfaces;
 using WebApplicationExample.Models;
 
@@ -13,57 +14,57 @@ namespace WebApplicationExample.Repos
         {
             _dataContext = dataContext;
         }
-        public async Task<Transaction> GetTransaction(int id)
+        public async Task<Transaction> GetTransaction(int transactionId)
         {
-            var transaction = await _dataContext.Transaction.FindAsync(id);
+            var transaction = await _dataContext.Transaction.FindAsync(transactionId);
             return transaction != null ? transaction : new Transaction();
         }
 
-        public async Task<bool> AddTransaction(Transaction transactionToAdd)
+        public async Task<bool> AddTransaction(TransactionDTO transactionDTO)
         {
-            var customer = await _dataContext.Customer.FindAsync(transactionToAdd.CustomerId);
-            var product = await _dataContext.Product.FindAsync(transactionToAdd.ProductId);
+            var customer = await _dataContext.Customer.FindAsync(transactionDTO.CustomerId);
+            var product = await _dataContext.Product.FindAsync(transactionDTO.ProductId);
 
             if (customer == null || product == null)
             {
                 return false;
             }
 
-            var postToAdd = new Transaction
+            var transaction = new Transaction
             {
-                Quantity = transactionToAdd.Quantity,
-                TransactionDate = transactionToAdd.TransactionDate,
+                Quantity = transactionDTO.Quantity,
+                TransactionDate = transactionDTO.TransactionDate,
                 Customer = customer,
                 Product = product
             };
 
-            await _dataContext.Transaction.AddAsync(postToAdd);
+            await _dataContext.Transaction.AddAsync(transaction);
             await _dataContext.SaveChangesAsync();
             return true;
         }
-        public async Task<bool> UpdateTransaction(Transaction transactionToUpdate)
+        public async Task<bool> UpdateTransaction(TransactionDTO transactionDTO)
         {
-            var transaction = await _dataContext.Transaction.FindAsync(transactionToUpdate.TransactionId);
-            var customer = await _dataContext.Customer.FindAsync(transactionToUpdate.TransactionId);
-            var product = await _dataContext.Product.FindAsync(transactionToUpdate.TransactionId);
+            var transaction = await _dataContext.Transaction.FindAsync(transactionDTO.TransactionId);
+            var customer = await _dataContext.Customer.FindAsync(transactionDTO.CustomerId);
+            var product = await _dataContext.Product.FindAsync(transactionDTO.ProductId);
 
             if (transaction == null || customer ==  null || product == null)
             {
                 return false;
             }
-            transaction.Quantity = transactionToUpdate.Quantity;
-            transaction.TransactionDate = transactionToUpdate.TransactionDate;
-            transaction.CustomerId = transactionToUpdate.CustomerId;
-            transaction.ProductId = transactionToUpdate.ProductId;
+            transaction.Quantity = transactionDTO.Quantity;
+            transaction.TransactionDate = transactionDTO.TransactionDate;
+            transaction.CustomerId = transactionDTO.CustomerId;
+            transaction.ProductId = transactionDTO.ProductId;
             transaction.Customer = customer;
             transaction.Product = product;
             await _dataContext.SaveChangesAsync();
             return true;
         }
 
-        public async Task<bool> DeleteTransaction(int id)
+        public async Task<bool> DeleteTransaction(int transactionId)
         {
-            var transaction = await _dataContext.Transaction.FindAsync(id);
+            var transaction = await _dataContext.Transaction.FindAsync(transactionId);
 
             if (transaction == null)
             {

@@ -15,9 +15,11 @@ namespace WebApplicationExample
             // Add services to the container.
             builder.Services.AddTransient<ICustomerRepo, CustomerRepo>();
             builder.Services.AddTransient<IProductRepo, ProductRepo>();
+            builder.Services.AddControllers();
+
+
             builder.Services.AddTransient<ITransactionRepo, TransactionRepo>();
 
-            builder.Services.AddControllers();
             builder.Services.AddDbContext<DataContext>(options =>
             {
                 options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
